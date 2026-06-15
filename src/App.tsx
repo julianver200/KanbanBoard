@@ -1,9 +1,14 @@
-import { Button } from "@/components/ui/button"
+import Header from "./components/layout/Header"
+import { ThemeProvider } from "./theme/ThemeProvider"
 
-export default function App() {
+const App = () => {
   return (
-    <div className="underline">
-      <Button>Shadcn is working!</Button>
-    </div>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <div>
+        <Header></Header>
+      </div>
+    </ThemeProvider>
   )
 }
+
+export default App
