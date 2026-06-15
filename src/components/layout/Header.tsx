@@ -5,11 +5,15 @@ import {
 } from "../ui/input-group"
 import { Search, Kanban } from "lucide-react"
 import { ModeToggle } from "../../theme/mode-toggle"
+import { Button } from "../ui/button"
 
 const Header = () => {
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-md py-4">
-            <div className="flex items-center px-6 max-w-7xl mx-auto gap-4">
+            {/* Added w-full and mx-auto so the container stretches, allowing ml-auto to work */}
+            <div className="flex w-full items-center px-6  gap-4">
+                
+                {/* Left: Logo */}
                 <div className="flex items-center">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <Kanban className="h-5 w-5" />
@@ -19,6 +23,7 @@ const Header = () => {
                     </span>
                 </div>
 
+                {/* Middle: Search */}
                 <div className="flex flex-1 items-center max-w-xs">
                     <InputGroup className="w-full bg-muted/40 hover:bg-muted/60 focus-within:bg-background transition-all duration-200">
                         <InputGroupAddon align="inline-start">
@@ -28,9 +33,18 @@ const Header = () => {
                     </InputGroup>
                 </div>
 
+                {/* Right: Actions (Pushed to the corner by ml-auto) */}
                 <div className="ml-auto flex items-center gap-4">
-                    <ModeToggle />
+                    <ModeToggle /> 
+                    {/* Changed to border-l so it's a single vertical line */}
+                    <div className="h-5 border-l border-border"></div>
+                    <div>
+                        <Button className="rounded-full hover:text-secondary-foreground">
+                            Create Project
+                        </Button>
+                    </div>
                 </div>
+
             </div>
         </header>
     )
