@@ -1,4 +1,4 @@
-import Project from "../main-card/project"
+import Project from "../main-card/Project"
 import ProjectOverview from "../main-card/ProjectOverview"
 
 const Main = () => {
