@@ -4,7 +4,7 @@ import {Plus } from "lucide-react";
 
 const ProjectHeader = () => {
   return (
-    <div className="flex flex-row w-full mt-[-0.5rem] px-2 border-b ">
+    <div className="flex flex-row w-full mt-[-0.5rem] px-2  ">
         <div className="p-2"><h1 className="text-[1.2rem]">Projects</h1></div>
         <div className="flex ml-auto gap-4">
             <ProjectSortingButton/>

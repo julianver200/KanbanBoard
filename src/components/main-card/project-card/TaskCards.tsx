@@ -12,27 +12,9 @@ export interface Task {
 }
 
 // 2. Create some dummy data to test the layout
-const mockTasks: Task[] = [
-  {
-    id: "TASK-1",
-    title: "Design Homepage UI",
-    description: "Create wireframes and high-fidelity mockups for the new landing page iteration.",
-    priority: "High",
-    comments: 3,
-    attachments: 2,
-    dueDate: "Oct 24"
-  },
-  {
-    id: "TASK-2",
-    title: "Fix Authentication Bug",
-    priority: "Medium",
-    comments: 5,
-    attachments: 0,
-    dueDate: "Oct 26"
-  }
-];
 
-const TaskCards = ({ tasks = mockTasks }: { tasks?: Task[] }) => {
+
+const TaskCards = ({ tasks}: { tasks?: Task[] }) => {
   
   // Helper function to color-code priorities
   const getPriorityColor = (priority: string) => {
@@ -48,6 +30,15 @@ const TaskCards = ({ tasks = mockTasks }: { tasks?: Task[] }) => {
         return "bg-muted text-muted-foreground";
     }
   };
+  if (!tasks || tasks.length === 0) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center align-middle rounded-lg bg-transparent p-4 text-center">
+        <p className="text-sm font-medium text-muted-foreground">
+          No tasks yet!
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-2">
