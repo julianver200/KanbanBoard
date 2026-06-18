@@ -11,10 +11,10 @@ const Header = () => {
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/50 backdrop-blur-lg py-3">
             {/* Added w-full and mx-auto so the container stretches, allowing ml-auto to work */}
-            <div className="flex w-full items-center px-6  gap-4">
+            <div className="flex w-full items-center px-6  gap-4 max-w-7xl mx-auto">
 
                 {/* Left: Logo */}
-                <div className="flex items-center">
+                <div className="flex items-center justify-center ">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
                         <Kanban className="h-5 w-5" />
                     </div>

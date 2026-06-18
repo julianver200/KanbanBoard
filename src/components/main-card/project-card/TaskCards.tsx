@@ -20,12 +20,12 @@ const TaskCards = ({ tasks}: { tasks?: Task[] }) => {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "High": 
-        // Added bg-red-500/10 (or bg-destructive/20) for the background!
         return "bg-red-500/10 text-red-500 dark:bg-red-500/20"; 
       case "Medium": 
         return "bg-orange-500/10 text-orange-500 dark:bg-orange-500/20"; 
       case "Low": 
-        return "bg-primary/10 text-primary";
+        // FIXED: Added blue background and text colors!
+        return "bg-blue-500/10 text-blue-500 dark:bg-blue-500/20";
       default: 
         return "bg-muted text-muted-foreground";
     }

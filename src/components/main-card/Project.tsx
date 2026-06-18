@@ -24,7 +24,9 @@ const mockBoards: Board[] = [
   {
     name: "Completed",
     createdAt: new Date(),
-    tasks: [] 
+    tasks: [
+        { id: "TASK-2", title: "Research Competitor Pricing", priority: "Low", comments: 0, attachments: 0, dueDate: "Oct 28" }
+    ] 
   }
 ];
 
