@@ -19,13 +19,13 @@ const Header = () => {
                         <Kanban className="h-5 w-5" />
                     </div>
                     <span className="text-xl font-bold tracking-tight text-primary ml-2">
-                        KanBan
+                        KanBanFlow
                     </span>
                 </div>
 
                 {/* Middle: Search */}
-                <div className="flex flex-1 items-center max-w-xs">
-                    <InputGroup className="w-full bg-muted/40 hover:bg-muted/60 focus-within:bg-background transition-all duration-200">
+                <div className="flex flex-1 items-center max-w-xs ml-6">
+                    <InputGroup className="w-full bg-muted/40 hover:bg-muted/60 focus-within:bg-background transition-all duration-200 rounded-3xl">
                         <InputGroupAddon align="inline-start">
                             <Search className="h-4 w-4 text-muted-foreground" />
                         </InputGroupAddon>
