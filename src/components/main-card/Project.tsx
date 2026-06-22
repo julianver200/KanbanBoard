@@ -73,7 +73,6 @@ const Project = () => {
 
     return (
         <div>
-            {/* FIXED: We removed the extra button and passed the click function directly to your Header! */}
             <div className="mb-4">
                 <ProjectHeader onAddTaskClick={() => setIsModalOpen(true)} />
             </div>
