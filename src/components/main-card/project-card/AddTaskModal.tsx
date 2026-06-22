@@ -39,8 +39,8 @@ const AddTaskModal = ({ isOpen, onClose, onAddTask }: AddTaskModalProps) => {
     setDescription("");
     setPriority("Low");
     setDueDate("");
-    setStatus("Yet to Start");
-
+    setStatus("Yet To Start");
+    onClose();
 };
 
 return (
