@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="mx-auto flex max-w-[1600px] flex-col sm:flex-row items-center justify-between gap-4 px-6 md:px-12 text-[10px] text-muted-foreground font-medium">
         <div className="flex items-center gap-1.5 select-none">
           <Terminal className="h-3.5 w-3.5 text-primary" />
-          <span>workspace: ~/Desktop/React/KanbanBoard</span>
+          <span>Hotdog</span>
         </div>
         
         <div className="flex items-center gap-4">

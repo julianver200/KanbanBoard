@@ -23,7 +23,7 @@ const TaskCards = ({ tasks = [] }: { tasks?: Task[] }) => {
 
   if (!tasks || tasks.length === 0) {
     return (
-      <div className="flex h-32 flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-transparent p-4 text-center">
+      <div className="flex h-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-transparent p-4 text-center">
         <p className="text-sm font-medium text-muted-foreground">
           No tasks yet
         </p>

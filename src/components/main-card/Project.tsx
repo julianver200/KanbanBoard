@@ -4,6 +4,7 @@ import ProjectBoard from "./project-card/ProjectBoard"
 import { type Board } from "./project-card/BoardCard"
 import { type Task } from "./project-card/TaskCards"
 import AddTaskModal from "./project-card/AddTaskModal"
+import AddBoardModal from "./project-card/AddBoardModal"
 
 // 1. Keep your mock data defined outside the component so it doesn't 
 // get recreated on every single render.
@@ -55,7 +56,8 @@ const mockBoards: Board[] = [
 
 const Project = () => {
     const [boards, setBoards] = useState<Board[]>(mockBoards);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+    const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
 
     const handleAddTask = (newTask: Task, targetColumn: string) => {
         setBoards((currentBoards) => {
@@ -70,11 +72,23 @@ const Project = () => {
             });
         });
     };
+    const handleAddBoard = (newBoardName: string) => {
+        const newBoard: Board = {
+            name: newBoardName,
+            createdAt: new Date(),
+            tasks: [] // Starts with empty tasks
+        };
+        // Inject it into the state!
+        setBoards([...boards, newBoard]);
+    };
 
     return (
         <div>
             <div className="mb-4">
-                <ProjectHeader onAddTaskClick={() => setIsModalOpen(true)} />
+                <ProjectHeader 
+                onAddTaskClick={() => setIsTaskModalOpen(true)} 
+                onAddBoardClick={()=> setIsBoardModalOpen(true)}
+                />
             </div>
             
             <div>
@@ -82,9 +96,14 @@ const Project = () => {
             </div>
 
             <AddTaskModal 
-              isOpen={isModalOpen} 
-              onClose={() => setIsModalOpen(false)} 
+              isOpen={isTaskModalOpen} 
+              onClose={() => setIsTaskModalOpen(false)} 
               onAddTask={handleAddTask} 
+            />
+            <AddBoardModal
+              isOpen={isBoardModalOpen} 
+              onClose={() => setIsBoardModalOpen(false)} 
+              onAddBoard={handleAddBoard} 
             />
         </div>
     )

@@ -3,30 +3,44 @@ import Header from "./components/layout/Header"
 import Main from "./components/layout/Main"
 import Footer from "./components/layout/Footer"
 import { ThemeProvider } from "./theme/ThemeProvider"
+import AddProjectModal from "./ProjectModal/AddProjectModal"
 import { type Board } from "./components/main-card/project-card/BoardCard"
-import AddProjectModal from "./addBoardModal/AddProjectModal"
+export interface Project {
+  id: string;
+  name: string; // e.g., "Website Redesign", "Mobile App Launch"
+  createdAt: Date;
+  boards: Board[]; // The specific columns that belong to THIS project
+}
 
-const mockProjects: Board[] = [
-  {
-    name: "Yet To Start",
-    createdAt: new Date(),
-    tasks: []
-  }
-];
+const getNextProjectId = (currentProjects: Project[]) => {
+  if (currentProjects.length === 0) return "PROJ-1";
+  
+  // Extract just the numbers from "PROJ-1", "PROJ-2", etc.
+  const idNumbers = currentProjects.map((p) => parseInt(p.id.split("-")[1]));
+  
+  // Find the highest number and add 1
+  const maxNumber = Math.max(...idNumbers);
+  return `PROJ-${maxNumber + 1}`;
+};
 
 const App = () => {
   
-// 1. The switch for the Add Project Modal
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
-  // 2. The function that actually handles saving the new project
+  
   const handleAddProject = (newProjectName: string) => {
-    // For now, let's just log it to make sure it works! 
-    // Later, you can add this to an array of projects.
-    console.log("New Project Created:", newProjectName);
+    const newProject: Project = {
+      id: getNextProjectId(projects), 
+      name: newProjectName,
+      createdAt: new Date(),
+      boards: [] 
+    };
     
-    // TODO: Add logic to update project state here
+    setProjects([...projects, newProject]);
   };
+  
+  
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <div className="flex flex-col min-h-screen bg-background">
