@@ -7,7 +7,12 @@ import { Search, Kanban, Plus } from "lucide-react"
 import { ModeToggle } from "../../theme/mode-toggle"
 import { Button } from "../ui/button"
 
-const Header = () => {
+interface HeaderProps {
+    onAddProjectClick: () => void;
+}
+
+
+const Header = ({ onAddProjectClick }: HeaderProps) => {
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/50 backdrop-blur-lg py-3">
             {/* Added w-full and mx-auto so the container stretches, allowing ml-auto to work */}
@@ -38,9 +43,11 @@ const Header = () => {
                     <ModeToggle />
                     <div className="h-5 border-l border-border/60"></div>
                     <div>
-                        <Button className="rounded-full gap-1.5 shadow-sm hover:shadow-md transition-all duration-200 font-semibold">
+                        <Button 
+                        onClick={onAddProjectClick}
+                        className="rounded-full gap-1.5 shadow-sm hover:shadow-md transition-all duration-200 font-semibold">
                             <Plus className="h-4 w-4" />
-                            <span>Create Board</span>
+                            <span>Add New Project</span>
                         </Button>
                     </div>
                 </div>
