@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Header from "./components/layout/Header"
 import Main from "./components/layout/Main"
 import Footer from "./components/layout/Footer"
 import { ThemeProvider } from "./theme/ThemeProvider"
 import AddProjectModal from "./ProjectModal/AddProjectModal"
 import { type Board } from "./components/main-card/project-card/BoardCard"
+import { type Task } from "./components/main-card/project-card/TaskCards"
+
 export interface Project {
   id: string;
   name: string; // e.g., "Website Redesign", "Mobile App Launch"
@@ -23,29 +25,127 @@ const getNextProjectId = (currentProjects: Project[]) => {
   return `PROJ-${maxNumber + 1}`;
 };
 
+interface SerializedBoard {
+  name: string;
+  createdAt: string;
+  tasks: Task[];
+}
+
+interface SerializedProject {
+  id: string;
+  name: string;
+  createdAt: string;
+  boards: SerializedBoard[];
+}
+
 const App = () => {
-  
-  const [projects, setProjects] = useState<Project[]>([]);
+  // Load initial projects from localStorage
+  const [projects, setProjects] = useState<Project[]>(() => {
+    const saved = localStorage.getItem("kanban_projects");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as SerializedProject[];
+        // Convert createdAt strings back to Date objects
+        return parsed.map((p) => ({
+          ...p,
+          createdAt: new Date(p.createdAt),
+          boards: p.boards.map((b) => ({
+            ...b,
+            createdAt: new Date(b.createdAt),
+          }))
+        }));
+      } catch (e) {
+        console.error("Error parsing saved projects:", e);
+      }
+    }
+    return [];
+  });
+
+  const [activeProjectId, setActiveProjectId] = useState<string>(() => {
+    const savedActive = localStorage.getItem("kanban_active_project_id");
+    return savedActive || "";
+  });
+
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
-  
+  // Compute the effective active project ID without synchronous effect updates
+  const effectiveActiveProjectId = activeProjectId || (projects[0]?.id || "");
+
+  // Sync to localStorage
+  useEffect(() => {
+    localStorage.setItem("kanban_projects", JSON.stringify(projects));
+  }, [projects]);
+
+  useEffect(() => {
+    localStorage.setItem("kanban_active_project_id", effectiveActiveProjectId);
+  }, [effectiveActiveProjectId]);
+
   const handleAddProject = (newProjectName: string) => {
+    const newProjectId = getNextProjectId(projects);
     const newProject: Project = {
-      id: getNextProjectId(projects), 
+      id: newProjectId, 
       name: newProjectName,
       createdAt: new Date(),
       boards: [] 
     };
     
     setProjects([...projects, newProject]);
+    setActiveProjectId(newProjectId);
   };
-  
-  
+
+  const handleAddBoard = (projectId: string, boardName: string) => {
+    setProjects((prev) =>
+      prev.map((p) => {
+        if (p.id === projectId) {
+          const newBoard: Board = {
+            name: boardName,
+            createdAt: new Date(),
+            tasks: []
+          };
+          return {
+            ...p,
+            boards: [...p.boards, newBoard]
+          };
+        }
+        return p;
+      })
+    );
+  };
+
+  const handleAddTask = (projectId: string, targetColumn: string, task: Task) => {
+    setProjects((prev) =>
+      prev.map((p) => {
+        if (p.id === projectId) {
+          return {
+            ...p,
+            boards: p.boards.map((b) => {
+              if (b.name === targetColumn) {
+                return {
+                  ...b,
+                  tasks: [...b.tasks, task]
+                };
+              }
+              return b;
+            })
+          };
+        }
+        return p;
+      })
+    );
+  };
+
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <div className="flex flex-col min-h-screen bg-background">
         <Header onAddProjectClick={() => setIsProjectModalOpen(true)} />
-        <Main/>
+        <Main
+          onAddProjectClick={() => setIsProjectModalOpen(true)}
+          projects={projects}
+          activeProjectId={effectiveActiveProjectId}
+          onSelectProject={setActiveProjectId}
+          onAddBoard={handleAddBoard}
+          onAddTask={handleAddTask}
+        />
         <Footer />
         <AddProjectModal
             isOpen={isProjectModalOpen}

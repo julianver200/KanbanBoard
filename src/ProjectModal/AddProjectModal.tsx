@@ -17,21 +17,17 @@ const AddProjectModal = ({ isOpen, onClose, onAddProject }: AddProjectModalProps
     if (projectName.trim() === "") return;
     
     onAddProject(projectName.trim());
-    
     setProjectName("");
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 rounded-2xl">
       <div className="bg-card w-full max-w-md p-6 rounded-xl border border-border shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
         
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold text-foreground">Create New Project</h2>
-          <button
-            onClick={() => { setProjectName(""); onClose(); }}
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
+          <button onClick={() => { setProjectName(""); onClose(); }} className="text-muted-foreground hover:text-foreground transition-colors">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -51,17 +47,10 @@ const AddProjectModal = ({ isOpen, onClose, onAddProject }: AddProjectModalProps
           </div>
 
           <div className="mt-4 flex justify-end gap-3 pt-4 border-t border-border">
-            <button
-              type="button"
-              onClick={() => { setProjectName(""); onClose(); }}
-              className="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
-            >
+            <button type="button" onClick={() => { setProjectName(""); onClose(); }} className="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-muted transition-colors">
               Cancel
             </button>
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
-            >
+            <button type="submit" className="px-4 py-2 rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm">
               Create Project
             </button>
           </div>
